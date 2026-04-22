@@ -7,6 +7,8 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
+    volumes:
+      - mysql_data:/var/lib/mysql
 
   wordpress1:
     image: wordpress:5.4.2-php7.2-apache
@@ -15,6 +17,14 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_AUTH_KEY: 'chave-auth-fixa-1234'
+      WORDPRESS_SECURE_AUTH_KEY: 'chave-secure-fixa-1234'
+      WORDPRESS_LOGGED_IN_KEY: 'chave-logged-fixa-1234'
+      WORDPRESS_NONCE_KEY: 'chave-nonce-fixa-1234'
+      WORDPRESS_AUTH_SALT: 'salt-auth-fixa-1234'
+      WORDPRESS_SECURE_AUTH_SALT: 'salt-secure-fixa-1234'
+      WORDPRESS_LOGGED_IN_SALT: 'salt-logged-fixa-1234'
+      WORDPRESS_NONCE_SALT: 'salt-nonce-fixa-1234'
     depends_on:
       - mysql
 
@@ -25,6 +35,14 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_AUTH_KEY: 'chave-auth-fixa-1234'
+      WORDPRESS_SECURE_AUTH_KEY: 'chave-secure-fixa-1234'
+      WORDPRESS_LOGGED_IN_KEY: 'chave-logged-fixa-1234'
+      WORDPRESS_NONCE_KEY: 'chave-nonce-fixa-1234'
+      WORDPRESS_AUTH_SALT: 'salt-auth-fixa-1234'
+      WORDPRESS_SECURE_AUTH_SALT: 'salt-secure-fixa-1234'
+      WORDPRESS_LOGGED_IN_SALT: 'salt-logged-fixa-1234'
+      WORDPRESS_NONCE_SALT: 'salt-nonce-fixa-1234'
     depends_on:
       - mysql
 
@@ -35,6 +53,14 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_AUTH_KEY: 'chave-auth-fixa-1234'
+      WORDPRESS_SECURE_AUTH_KEY: 'chave-secure-fixa-1234'
+      WORDPRESS_LOGGED_IN_KEY: 'chave-logged-fixa-1234'
+      WORDPRESS_NONCE_KEY: 'chave-nonce-fixa-1234'
+      WORDPRESS_AUTH_SALT: 'salt-auth-fixa-1234'
+      WORDPRESS_SECURE_AUTH_SALT: 'salt-secure-fixa-1234'
+      WORDPRESS_LOGGED_IN_SALT: 'salt-logged-fixa-1234'
+      WORDPRESS_NONCE_SALT: 'salt-nonce-fixa-1234'
     depends_on:
       - mysql
 
@@ -48,3 +74,18 @@ services:
       - wordpress1
       - wordpress2
       - wordpress3
+
+  locust:
+    image: grubykarol/locust
+    environment:
+      ATTACKED_HOST: http://nginx
+      LOCUST_OPTS: "--users 10 --spawn-rate 10"
+    volumes:
+      - ./locustfile.py:/locust/locustfile.py
+    ports:
+      - "8089:8089"
+    depends_on:
+      - nginx
+
+volumes:
+  mysql_data:
