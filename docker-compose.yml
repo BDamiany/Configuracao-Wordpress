@@ -8,7 +8,7 @@ services:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./mysql_data:/var/lib/mysql
 
   wordpress1:
     image: wordpress:5.4.2-php7.2-apache
@@ -86,6 +86,3 @@ services:
       - "8089:8089"
     depends_on:
       - nginx
-
-volumes:
-  mysql_data:
