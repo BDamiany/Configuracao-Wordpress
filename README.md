@@ -1,5 +1,5 @@
 # Configuracao-Wordpress
-Trabalho AV2 Computação distribuida
+Trabalho AV2 Computação Distribuida
 
 Brenno Damiany Castro Vidal - 2315088
 
