@@ -9,6 +9,8 @@ services:
       MYSQL_PASSWORD: wordpress
     volumes:
       - ./mysql_data:/var/lib/mysql
+    networks:
+      - wp-network
 
   wordpress1:
     image: wordpress:5.4.2-php7.2-apache
@@ -27,6 +29,8 @@ services:
       WORDPRESS_NONCE_SALT: 'salt-nonce-fixa-1234'
     depends_on:
       - mysql
+    networks:
+      - wp-network
 
   wordpress2:
     image: wordpress:5.4.2-php7.2-apache
@@ -45,6 +49,8 @@ services:
       WORDPRESS_NONCE_SALT: 'salt-nonce-fixa-1234'
     depends_on:
       - mysql
+    networks:
+      - wp-network
 
   wordpress3:
     image: wordpress:5.4.2-php7.2-apache
@@ -63,6 +69,8 @@ services:
       WORDPRESS_NONCE_SALT: 'salt-nonce-fixa-1234'
     depends_on:
       - mysql
+    networks:
+      - wp-network
 
   nginx:
     image: nginx:1.19.0
@@ -74,15 +82,21 @@ services:
       - wordpress1
       - wordpress2
       - wordpress3
+    networks:
+      - wp-network
 
   locust:
-    image: grubykarol/locust
-    environment:
-      ATTACKED_HOST: http://nginx
-      LOCUST_OPTS: "--users 10 --spawn-rate 10"
+    image: locustio/locust
     volumes:
-      - ./locustfile.py:/locust/locustfile.py
+      - ./locustfile.py:/mnt/locust/locustfile.py
     ports:
       - "8089:8089"
+    command: -f /mnt/locust/locustfile.py --host http://nginx
     depends_on:
       - nginx
+    networks:
+      - wp-network
+
+networks:
+  wp-network:
+    driver: bridge

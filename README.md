@@ -1,8 +1,8 @@
 # Configuracao-Wordpress
-Trabalho AV2 Computação Distribuida
+trabalho av2 Computação distribuida
 
-Brenno Damiany Castro Vidal - 2315088
+Brenno Damiany Castro Vidal 
 
-Diego Henrique Santos Queiroz - 2315108
+Diego Henrique Santos Queiroz
 
-Caio Victor Ferreira da Silva - 2010224
+Caio Victor Ferreira da Silva
